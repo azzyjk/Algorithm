@@ -41,9 +41,11 @@ int main(){
 			else v2.push_back(i);
 		}
 	}
+	
 	sort(v2.begin(), v2.end());
 	
-	cout<<floor(sum/v.size()+0.5)<<endl;
+	cout<<fixed;
+	cout<<(double)sum/v.size()<<endl;
 	cout<<v[v.size()/2]<<endl;
 	if(v2.size()==1) cout<<v2.front()<<endl;
 	else cout<<v2[1]<<endl;
