@@ -3,6 +3,7 @@
 #include<algorithm>
 #include<utility>
 #include<cstring>
+#include<cstdio>
 
 using namespace std;
 
@@ -18,22 +19,29 @@ bool cmp(const pair<string, int> a, const pair<string, int> b){
 	else return false;
 }
 
+bool check(vector<pair<string,int> > v, string str){
+	for(vector<int>::size_type i=0; i<v.size(); i++){
+		if(v[i].first==str) return false;
+	}
+	return true;
+}
+
 int main(){
 	int N, num;
 	string str;
 	vector<pair<string, int> > v;
 	
-	cin>>N;
+	scanf("%d", &N);
 	
 	for(int i=0; i<N; i++){
 		cin>>str;
-		v.push_back(make_pair(str,str.length()));
+		if(check(v, str)) v.push_back(make_pair(str,str.length()));
 	}
 	
 	sort(v.begin(), v.end(), cmp);
 	
 	for(vector<string>::size_type i=0; i<v.size(); i++){
-		cout<<v[i].first<<" "<<v[i].second<<" "<<v[i].first[0]<<endl;
+		printf("%s\n", v[i].first.c_str());
 	}
 	
 	return 0;
