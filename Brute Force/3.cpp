@@ -6,7 +6,7 @@ using namespace std;
 
 int main(){
 	int N, x, y, ar[50]={'\0',};
-	int grade=1, Wmax=0, Hmax=0;
+	int grade;
 	vector<pair<int, int> > v;
 	cin>>N;
 	
@@ -16,21 +16,11 @@ int main(){
 	}
 	
 	for(int j=0; j<N; j++){
+		grade=1;
 		for(int i=0; i<N; i++){
-			if(v[Wmax].first<v[i].first) Wmax=i;
-			if(v[Hmax].second<v[i].second) Hmax=i;
+			if(v[j].first<v[i].first&&v[j].second<v[i].second) grade++;
 		}
-		v[Wmax].first=0;
-		if(Wmax==Hmax){
-			if(ar[Wmax]==0) ar[Wmax]=j+1;
-			v[Hmax].second=0;
-			grade=grade+1;
-		}
-		else{
-			ar[Wmax]=grade;
-			ar[Hmax]=grade;
-			v[Wmax].second=0;
-		}
+		ar[j]=grade;
 	}
 	
 	for(int i=0; i<N; i++){
