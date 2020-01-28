@@ -1,15 +1,10 @@
 #include<iostream>
-#include<vector>
 using namespace std;
 
 bool anal(int number){
-	vector<int> v;
-	while(number!=0){
-		v.push_back(number%10);
-		number/=10;
-	}
-	for(int i=0; i<v.size()-2; i++){
-		if(v[i]==6&&v[i+1]==6&&v[i+2]==6) return true;
+	while(number>=666){
+		if(number%1000==666) return true;
+		else number/=10;
 	}
 	return false;
 }
