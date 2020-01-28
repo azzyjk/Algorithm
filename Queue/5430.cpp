@@ -4,16 +4,14 @@ using namespace std;
 
 void makeDQ(deque<int>& dq, string number){
 	int num;
-	for(int i=0; number[i]!=']'; i++){
-		if(number[i]>='0'&&number[i]<='9') {
-			num=number[i]-'0';
-			while(number[i+1]>='0'&&number[i+1]<='9'){
-				i+=1;
-				num*=10;
-				num+=number[i]-'0';
-			}	
-			dq.push_back(num);
+	for(int i=1; i<number.length(); i++){
+		num=0;
+		while(number[i]!=','&&number[i]!=']'){
+			num*=10;
+			num+=number[i]-'0';
+			i++;
 		}
+		if(num!=0) dq.push_back(num);
 	}
 }
 
@@ -41,7 +39,10 @@ void exer(deque<int>& dq, bool& now, string p){
 				break;
 				
 			case 'D':
-				if(dq.empty()) cout<<"error\n";
+				if(dq.empty()) {
+					cout<<"error\n";
+					return;
+				}
 				else{
 					if(now==false) dq.pop_front();
 					else dq.pop_back();
@@ -49,6 +50,7 @@ void exer(deque<int>& dq, bool& now, string p){
 				break;
 		}
 	}
+	Print(dq, now);
 }
 
 int main(){
@@ -62,7 +64,6 @@ int main(){
 		cin>>p>>n>>number;
 		makeDQ(dq, number);
 		exer(dq, now, p);
-		if(!dq.empty()) Print(dq, now);
 	}
 	
 	return 0;
