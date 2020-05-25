@@ -10,9 +10,9 @@
         "-g",
         "${file}",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}.out",
+        "${fileDirname}/${fileBasenameNoExtension}",
         "&&",
-        "${fileDirname}/${fileBasenameNoExtension}.out"
+        "${fileDirname}/${fileBasenameNoExtension}"
 
         //2. file input
         /* 
