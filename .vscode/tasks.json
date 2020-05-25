@@ -7,12 +7,12 @@
       "label": "g++ build active file",
       "command": "/usr/bin/g++",
       "args": [
-        "-g",
-        "${file}",
+        // "-g",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}",
-        "&&",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${file}"
+        // "&&",
+        // "${fileDirname}/${fileBasenameNoExtension}"
 
         //2. file input
         /* 
