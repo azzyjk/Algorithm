@@ -5,34 +5,34 @@
 
 using namespace std;
 
-stack<int> s;
-
 void DFS(vector<int> v[], int V, bool* check) {
-  int now = 0;
+  stack<int> s;
+  int now = 0, next = 0;
   s.push(V);
   check[V] = true;
-
-  // cout << V << endl;
+  cout << V << " ";
 
   while (!s.empty()) {
     now = s.top();
-    // s.pop();
+    s.pop();
     for (vector<int>::size_type i = 0; i < v[now].size(); i++) {
-      if (check[v[now][i]] == false) {
-        check[v[now][i]] = true;
-        s.push(v[now][i]);
-        DFS(v, V, check);
+      next = v[now][i];
+      if (check[next] == false) {
+        cout << next << " ";
+        check[next] = true;
+        s.push(now);
+        s.push(next);
+        break;
       }
     }
   }
+  cout << endl;
 }
 
 int main() {
   int N, M, V, start, end;
 
   cin >> N >> M >> V;
-  queue<int> q;
-  stack<int> s;
   vector<int> v[N + 1];
   bool check[N + 1];
 
@@ -43,12 +43,7 @@ int main() {
   }
 
   DFS(v, V, check);
-  cout << "start" << endl;
-  while (!s.empty()) {
-    cout << s.top() << endl;
-    s.pop();
-  }
-
+  cout << endl;
   // v[1].pop_back();
   // cout << v[1].size();
 
