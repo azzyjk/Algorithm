@@ -80,12 +80,6 @@ int main(){
     initArr(arr, N);
 
     BFS(v, V, arr);
-    // for(int i=0; i<N; i++){
-    //     for(int j=0; j<v[i].size(); j++){
-    //         cout << v[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
 
     return 0;
 }
