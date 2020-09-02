@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(){
-    int N, temp, max, now, resMax;
+    int N, temp, max, now, resMax=0;
     vector<int> A, dpLeft, dpRight;
 
     cin >> N;
@@ -31,11 +31,13 @@ int main(){
         dpRight.push_back(max+1);
     }
 
-    for(int i=0; i<A.size(); i++){
+    for(int i=0; i<A.size(); i++) {
         if(resMax<(dpRight[A.size()-i-1]+dpLeft[i])) resMax = dpRight[A.size()-i-1]+dpLeft[i];
     }
 
     cout<< resMax-1 << endl;
+
+    
 
     return 0;
 }
