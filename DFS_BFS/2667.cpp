@@ -7,50 +7,59 @@
 
 using namespace std;
 
-vector<int> res;
 
-void DFS(vector<string> v, int startI, int startJ, bool (*arr)[MAX], int N){
-    int now, i, j, sum=0;
-    stack< pair<int, int> > s;
-    s.push(make_pair(startI, startJ));
+vector< pair<int, int> > direction;
+int sum, N;
+bool arr[MAX][MAX]={0,};
 
-    while(!s.empty()){
-        i = s.top().first;
-        j = s.top().second;
-        s.pop();
-    
-        if(arr[i][j]==0) {
-            sum++;
-            arr[i][j]=1;
+void DFS(vector<string> v, int i, int j){
+    int nextX, nextY;
+    sum ++;
 
-            if(j>0) {if(arr[i][j-1]==0 && v[i][j-1] == '1') {s.push(make_pair(i, j-1));}}
-            if(j<N) {if(arr[i][j+1]==0 && v[i][j+1] == '1') {s.push(make_pair(i, j+1));}}
-            if(i>0) {if(arr[i-1][j]==0 && v[i-1][j] == '1') {s.push(make_pair(i-1, j));}}
-            if(i<N) {if(arr[i+1][j]==0 && v[i+1][j] == '1') {s.push(make_pair(i+1, j));}}
+    if(arr[i][j]==0){
+        arr[i][j] = 1;
+        for(int idx=0; idx<direction.size(); idx++){
+            nextY = i+direction[idx].first;
+            nextX = j+direction[idx].second;
+            
+            if(nextY<N && nextY>=0 && nextX  <N && nextX>=0) {
+                if(arr[nextY][nextX] == 0 && v[nextY][nextX] == '1') DFS(v, nextY, nextX);
+            }
         }
     }
+}
 
-    res.push_back(sum);
+void addDirection(){
+    direction.push_back(make_pair(1,0));
+    direction.push_back(make_pair(-1,0));
+    direction.push_back(make_pair(0,1));
+    direction.push_back(make_pair(0,-1));
 }
 
 int main(){
-    int N;
-    bool arr[MAX][MAX]={0,};
     string tmp;
     vector<string> v;
+    vector<int> res;
 
     cin>> N;
+
+    addDirection();
 
     for(int i=0; i<N; i++){
         cin >> tmp;
         v.push_back(tmp);
     }
-
+    
     for(int i=0; i<N; i++){
         for(int j=0; j<N; j++){
-            if(v[i][j]=='1' && arr[i][j]==0) DFS(v, i, j, arr, N);
+            if(v[i][j]=='1' && arr[i][j]==0) {
+                sum = 0;
+                DFS(v, i, j);
+                res.push_back(sum);
+            }
         }
     }
+
     cout << res.size() << endl;
 
     sort(res.begin(), res.end());
