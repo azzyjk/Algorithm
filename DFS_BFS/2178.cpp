@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<queue>
+#include<algorithm>
 #include <utility>
 
 #define NMAX 100
@@ -8,8 +9,9 @@
 using namespace std;
 
 int arr[NMAX][MMAX];
+bool visit[NMAX][MMAX];
+int res[NMAX][MMAX];
 vector< pair<int ,int> > direction;
-vector<int> res;
 
 void addDirection(){
     direction.push_back(make_pair(0, 1));
@@ -18,36 +20,27 @@ void addDirection(){
     direction.push_back(make_pair(1, 0));
 }
 
-void BFS(int N, int M, int n, int m, int now, int (*visit)[MMAX]){
+void BFS(int N, int M){
     int x, y, nextX, nextY;
-    int nowVisit[N][M];
+    queue< pair<int, int> > q;
 
-    y = n;
-    x = m;
-    visit[y][x] = true;
-    now++;
-    
-    copy(&visit[0][0], &visit[0][0]+N*M, &nowVisit[0][0]);
+    q.push(make_pair(0, 0));
 
-    for(int i=0; i<N; i++){
-        for(int j=0; j<M; j++){
-            cout << nowVisit[i][j] << " ";
-        }
-        cout << endl;
-    }
-    if(y == N-1 && x == M-1){
-        res.push_back(now);
-    }
-    else{
+    while(!q.empty()){
+        y = q.front().first;
+        x = q.front().second;
+        q.pop();
+        visit[y][x] = true;
         for(int i =0; i<direction.size(); i++){
             nextY = y + direction[i].first;
             nextX = x + direction[i].second;
 
             if(nextY>=0 && nextX >=0 && nextY < N && nextX < M){
-                if(visit[nextY][nextX] == false && arr[nextY][nextX] == 1){ 
-                    BFS(N, M, nextY, nextX, now, arr);
-                    cout << "back" << endl;
+                if(visit[nextY][nextX] == false && arr[nextY][nextX] == 1 && res[nextY][nextX]==0){ 
+                    res[nextY][nextX] = res[y][x]+1;
+                    q.push(make_pair(nextY, nextX));
                 }
+                
             }
             
         }
@@ -56,17 +49,11 @@ void BFS(int N, int M, int n, int m, int now, int (*visit)[MMAX]){
 
 int main(){
     int N, M, tmp;
-    bool visit[NMAX][MMAX]={{0}};
     cin >> N >> M;
 
-    for(int i=0; i<N; i++){
-        for(int j=0; j<M; j++){
-            cout << visit[i][j] << " ";
-        }
-        cout << endl;
-    }
-
+    res[0][0] = 1;
     addDirection();
+
     cin.get();
     for(int i=0; i< N; i++){
         for(int j=0; j<M; j++){
@@ -75,10 +62,8 @@ int main(){
         }
         cin.get();
     }
-    BFS(N, M, 0, 0, 0, arr);
-    cout << "res size : " << res.size()<<endl;
-    for(int i=0; i<res.size(); i++){
-        cout << res[i] <<endl;
-    }
+    BFS(N, M);
+    
+    cout << res[N-1][M-1] <<endl;
     return 0;
 }
